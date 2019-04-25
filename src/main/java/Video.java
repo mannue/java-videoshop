@@ -1,21 +1,38 @@
 import java.util.Objects;
 
 public class Video {
-    private Integer day;
-    private String type;
+    private VideoType type;
     private String title;
     private Integer price;
 
-    public Video(String type, String title, Integer price) {
+    public Video(VideoType type, String title, Integer price) {
         this.type = type;
         this.title = title;
+        if (price < 1) throw new IllegalArgumentException();
         this.price = price;
+    }
+
+    public String getType() {
+        return type.value();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Integer getPrice() {
+        return price;
     }
 
     @Override
     public boolean equals(Object obj) {
-        Video video = (Video) obj;
-        return type.equals(video.type) && title.equals(video.title) && price.equals(video.price);
+        if (obj instanceof Video) {
+            Video video = (Video) obj;
+            return type.equals(video.type) &&
+                    Objects.equals(title.toLowerCase(), video.title.toLowerCase()) &&
+                    price.equals(video.price);
+        }
+        throw new IllegalArgumentException();
     }
 
     @Override
@@ -26,18 +43,11 @@ public class Video {
     @Override
     public String toString() {
         return "Video{" +
-                "type='" + type + '\'' +
+                "type=" + type +
                 ", title='" + title + '\'' +
                 ", price=" + price +
                 '}';
     }
 
-    public Integer getToTal() {
-        return price * day;
-    }
-
-    public void setDay(Integer day) {
-        this.day = day;
-    }
 }
 
