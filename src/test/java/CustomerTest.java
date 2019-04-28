@@ -40,14 +40,4 @@ public class CustomerTest {
         Integer size = customer.register(rental);
         assertThat(size, is(1));
     }
-
-    @Test
-    public void 고객은빌린정보를가져올수있다() {
-        Customer customer = new Customer("eunnam");
-        Rental rental = new Rental(20000);
-        rental.add(new Order("fifa", 10), new Order("ring", 5));
-        Integer size = customer.register(rental);
-        size = customer.history();
-        assertThat(size, is(1));
-    }
 }

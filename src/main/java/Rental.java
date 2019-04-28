@@ -32,5 +32,13 @@ public class Rental {
         list.addAll(Arrays.asList(orders));
         return list.size();
     }
+
+    public Integer getAmount() {
+        return amount;
+    }
+
+    public List<Order> getList() {
+        return list;
+    }
 }
 

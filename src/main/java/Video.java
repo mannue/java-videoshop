@@ -35,4 +35,8 @@ public class Video {
         if(date > maxDate) throw new IllegalArgumentException();
         return price * date;
     }
+
+    public void info () {
+        System.out.println("비디오(종류:"+type.value()+", 제목:"+title+", 대여가격:"+price+", 최대대여기간: "+maxDate+")");
+    }
 }
