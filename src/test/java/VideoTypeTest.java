@@ -5,10 +5,10 @@ import static org.junit.Assert.assertThat;
 
 public class VideoTypeTest {
     @Test
-    public void 장르가져오기() {
-        VideoType type = VideoType.of("sport");
+    public void 장츠가져오기() {
+        VideoType type = VideoType.of("스포츠");
         assertThat(type, is(VideoType.SPORT));
-        assertThat(type.value(), is("sport"));
+        assertThat(type.value(), is("스포츠"));
     }
 
     @Test(expected = IllegalArgumentException.class)

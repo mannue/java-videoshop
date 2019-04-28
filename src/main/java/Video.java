@@ -4,50 +4,35 @@ public class Video {
     private VideoType type;
     private String title;
     private Integer price;
+    private Integer maxDate;
 
-    public Video(VideoType type, String title, Integer price) {
+    public Video(VideoType type, String title, Integer price, Integer maxDate) {
         this.type = type;
         this.title = title;
-        if (price < 1) throw new IllegalArgumentException();
         this.price = price;
-    }
-
-    public String getType() {
-        return type.value();
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public Integer getPrice() {
-        return price;
+        this.maxDate = maxDate;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Video) {
+        if(obj instanceof Video) {
             Video video = (Video) obj;
-            return type.equals(video.type) &&
-                    Objects.equals(title.toLowerCase(), video.title.toLowerCase()) &&
-                    price.equals(video.price);
+            return type == video.type &&
+                    Objects.equals(title, video.title) &&
+                    Objects.equals(price, video.price) &&
+                    Objects.equals(maxDate, video.maxDate);
         }
         throw new IllegalArgumentException();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(type, title, price);
+        return Objects.hash(type, title, price, maxDate);
     }
 
-    @Override
-    public String toString() {
-        return "Video{" +
-                "type=" + type +
-                ", title='" + title + '\'' +
-                ", price=" + price +
-                '}';
-    }
 
+    public Integer getAmount(Integer date) {
+        if(date > maxDate) throw new IllegalArgumentException();
+        return price * date;
+    }
 }
-

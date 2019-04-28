@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Customer {
     private String name;
-    private List<Rental> infos = new ArrayList<Rental>();
+    private List<Rental> list = new ArrayList<>();
 
     public Customer(String name) {
         this.name = name;
@@ -14,7 +14,7 @@ public class Customer {
     public boolean equals(Object obj) {
         if (obj instanceof Customer) {
             Customer customer = (Customer) obj;
-            return Objects.equals(name.toLowerCase(), customer.name.toLowerCase());
+            return Objects.equals(name, customer.name);
         }
         throw new IllegalArgumentException();
     }
@@ -24,20 +24,12 @@ public class Customer {
         return Objects.hash(name);
     }
 
-    public Integer getRentalCount() {
-        return infos.size();
+    public Integer register(Rental rental) {
+        list.add(rental);
+        return list.size();
     }
 
-    public Integer getRentalPrice() {
-        return infos.stream().mapToInt(Rental::fee).sum();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void register(Rental rental) {
-        if (rental == null) throw new IllegalArgumentException();
-        infos.add(rental);
+    public Integer history() {
+        return list.size();
     }
 }

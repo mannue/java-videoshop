@@ -1,42 +1,36 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Rental {
-    private Integer day;
-    private Video video;
+    private Integer amount;
+    private List<Order> list = new ArrayList<>();
 
-    public Rental(Integer day, Video video) {
-        if (day < 1) throw new IllegalArgumentException();
-        this.day = day;
-        this.video = video;
+    public Rental(Integer amount, Order order) {
+        this(amount);
+        list.add(order);
+    }
+
+    public Rental(Integer amount) {
+        this.amount = amount;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Rental) {
-            Rental rental = (Rental) obj;
-            return day.equals(rental.day) &&
-                    Objects.equals(video, rental.video);
-        }
-        throw new IllegalArgumentException();
+        Rental rental = (Rental) obj;
+        return Objects.equals(amount, rental.amount) &&
+                Objects.equals(list.size(), rental.list.size());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(day, video);
+        return Objects.hash(amount, list);
     }
 
-    public Integer fee() {
-        return day * video.getPrice();
-    }
-
-    public Map<String, String> getInfo() {
-        return new HashMap<String, String>() {{
-            put(Key.TYPE.value(), video.getType());
-            put(Key.TITILE.value(), video.getTitle());
-            put(Key.PRICE.value(), Integer.toString(video.getPrice()));
-            put(Key.DAY.value(), Integer.toString(day));
-        }};
+    public Integer add(Order... orders) {
+        list.addAll(Arrays.asList(orders));
+        return list.size();
     }
 }
+

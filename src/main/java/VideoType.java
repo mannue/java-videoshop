@@ -1,7 +1,7 @@
 import java.util.Objects;
 
 public enum VideoType {
-    SPORT("sport") , MOVIE("movie"), DOCUMENTARY("documentary");
+    SPORT("스포츠") , MOVIE("영화"), DOCUMENTARY("다큐멘타");
 
     private String type;
 
