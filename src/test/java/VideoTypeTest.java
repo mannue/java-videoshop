@@ -5,7 +5,7 @@ import static org.junit.Assert.assertThat;
 
 public class VideoTypeTest {
     @Test
-    public void 장츠가져오기() {
+    public void 장가져오기() {
         VideoType type = VideoType.of("스포츠");
         assertThat(type, is(VideoType.SPORT));
         assertThat(type.value(), is("스포츠"));

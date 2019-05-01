@@ -24,13 +24,12 @@ public class VideoTest {
     @Test
     public void 비디오최대빌린기간이맞는지확인하고맞으면요금을알려준() {
         Video video = new Video(VideoType.SPORT,"fifa",1000,10);
-        assertThat(video.getAmount(8),is(8000));
+        assertThat(video.calculateAmount(8),is(8000));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void 최대기간보다더많은기간을입력하면에러를발생한다() {
         Video video = new Video(VideoType.SPORT,"fifa",1000,10);
-        video.getAmount(11);
+        video.calculateAmount(11);
     }
-
 }

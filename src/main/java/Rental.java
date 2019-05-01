@@ -7,9 +7,9 @@ public class Rental {
     private Integer amount;
     private List<Order> list = new ArrayList<>();
 
-    public Rental(Integer amount, Order order) {
+    public Rental(Integer amount, Order ... orders) {
         this(amount);
-        list.add(order);
+        list.addAll(Arrays.asList(orders));
     }
 
     public Rental(Integer amount) {
@@ -28,16 +28,19 @@ public class Rental {
         return Objects.hash(amount, list);
     }
 
-    public Integer add(Order... orders) {
-        list.addAll(Arrays.asList(orders));
+    public Integer getOrderCount() {
         return list.size();
     }
 
-    public Integer getAmount() {
-        return amount;
+    @Override
+    public String toString() {
+        return "Rental{" +
+                "amount=" + amount +
+                ", list=" + list +
+                '}';
     }
 
-    public List<Order> getList() {
+    public List<Order> getOrderList() {
         return list;
     }
 }

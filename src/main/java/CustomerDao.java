@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserDao {
+public class CustomerDao {
     private Map<String, Customer> db = new HashMap<>();
 
     public Customer get(String name) {

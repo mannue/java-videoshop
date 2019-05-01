@@ -31,12 +31,18 @@ public class Video {
     }
 
 
-    public Integer getAmount(Integer date) {
+    public Integer calculateAmount(Integer date) {
         if(date > maxDate) throw new IllegalArgumentException();
         return price * date;
     }
 
-    public void info () {
-        System.out.println("비디오(종류:"+type.value()+", 제목:"+title+", 대여가격:"+price+", 최대대여기간: "+maxDate+")");
+    @Override
+    public String toString() {
+        return "Video{" +
+                "type=" + type.value() +
+                ", title='" + title + '\'' +
+                ", price=" + price +
+                ", maxDate=" + maxDate +
+                '}';
     }
 }

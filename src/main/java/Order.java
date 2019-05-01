@@ -31,4 +31,12 @@ public class Order {
     public Integer date() {
         return date;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "title='" + title + '\'' +
+                ", date=" + date +
+                '}';
+    }
 }
