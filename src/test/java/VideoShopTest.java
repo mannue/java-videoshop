@@ -41,7 +41,7 @@ public class VideoShopTest {
         Video video = new Video(VideoType.SPORT, "fifa", 10000, 10);
         when(mock.get("fifa")).thenReturn(video);
         VideoShop videoShop = new VideoShop(new CustomerManager(), mock);
-        assertThat(videoShop.getVideo("fifa"),is(video));
+        assertThat(videoShop.findVideo("fifa"),is(video));
     }
 
     @Test
@@ -52,9 +52,17 @@ public class VideoShopTest {
         when(videoManagerMock.get("fifa")).thenReturn(new Video(VideoType.SPORT,"fifa",1000,10));
         when(customerManagerMock.get(anyString())).thenReturn(customerMock);
         VideoShop videoShop = new VideoShop(customerManagerMock, videoManagerMock);
-        Order order = new Order(videoShop.getVideo("fifa"), 5);
+        Order order = new Order(videoShop.findVideo("fifa"), 5);
         videoShop.rent("mannue", order);
         verify(customerMock).register(order);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void 고객이_잘못된비디오를_빌릴려고하면_에러가발생한다() {
+        CustomerManager customerManagerMock = mock(CustomerManager.class);
+        Customer customerMock = mock(Customer.class);
+        when(customerManagerMock.get(anyString())).thenReturn(customerMock);
+        VideoShop videoShop = new VideoShop(customerManagerMock, new VideoManager());
+        videoShop.rent("mannue",new Order(null,0));
+    }
 }

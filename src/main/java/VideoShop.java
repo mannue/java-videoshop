@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class VideoShop {
     private CustomerManager customerManager;
     private VideoManager videoManager;
@@ -16,18 +18,22 @@ public class VideoShop {
         return sum;
     }
 
-    public Customer rent(String name, Order... ordes) {
+    public Customer rent(String name, Order... orders) {
         Customer customer = customerManager.get(name);
-        customer.register(ordes);
+        validationOrders(orders);
+        customer.register(orders);
         return customer;
     }
 
-    public Video getVideo(String title) {
-        return videoManager.get(title);
+    private void validationOrders(Order ... orders) {
+        try{
+            Arrays.stream(orders).map(Order::video).map(Video::getTitle).forEach(this::findVideo);
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException();
+        }
     }
 
-    public void printCustomerInfo(String name) {
-        Customer customer = customerManager.get(name);
-        System.out.println(customer);
+    public Video findVideo(String title) {
+        return videoManager.get(title);
     }
 }
