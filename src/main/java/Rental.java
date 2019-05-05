@@ -35,13 +35,10 @@ public class Rental {
     @Override
     public String toString() {
         return "Rental{" +
-                "amount=" + amount +
-                ", list=" + list +
+                "총금액=" + amount +
+                ", 대여 비디오갯수=" + list.size() +
+                ", 대여정보=" + list +
                 '}';
-    }
-
-    public List<Order> getOrderList() {
-        return list;
     }
 }
 

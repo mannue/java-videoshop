@@ -1,31 +1,29 @@
 import java.util.Objects;
 
 public class Order {
-    private String title;
+    private Video video;
     private Integer date;
 
-    public Order(String title, Integer date) {
-        this.title = title;
+    public Order(Video video, Integer date) {
+        this.video = video;
         this.date = date;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Order) {
-            Order order = (Order) obj;
-            return Objects.equals(title, order.title) &&
-                    Objects.equals(date, order.date);
-        }
-        throw new IllegalArgumentException();
+        if(obj == null || obj.getClass() != getClass()) return false;
+        if(obj == this) return true;
+        Order order = (Order) obj;
+        return Objects.equals(order.video(),video) && Objects.equals(order.date(),date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, date);
+        return Objects.hash(video, date);
     }
 
-    public String title() {
-        return this.title;
+    public Video video() {
+        return video;
     }
 
     public Integer date() {
@@ -35,7 +33,7 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "title='" + title + '\'' +
+                "video=" + video +
                 ", date=" + date +
                 '}';
     }

@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class CustomerDao {
+public class CustomerManager {
     private Map<String, Customer> db = new HashMap<>();
 
     public Customer get(String name) {
@@ -10,7 +10,8 @@ public class CustomerDao {
         return db.get(lower);
     }
 
-    public Customer add(String name, Customer customer) {
+    public Customer add(Customer customer) {
+        String name = customer.getName();
         try {
             return get(name);
         } catch (IllegalArgumentException e) {

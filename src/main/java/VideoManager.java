@@ -1,7 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class VideoDao {
+public class VideoManager {
     private Map<String, Video> db = new HashMap<>();
 
     public Video get(String title) {
@@ -11,7 +11,8 @@ public class VideoDao {
     }
 
 
-    public Video add(String title, Video video) {
+    public Video add(Video video) {
+        String title = video.getTitle();
         try{
             return get(title);
         }catch (IllegalArgumentException e) {

@@ -7,55 +7,54 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class VideoShopTest {
-    private VideoShop mockVideoShop(BiConsumer biConsumer) {
-        CustomerDao customerDao = mock(CustomerDao.class);
-        VideoDao videoDao = mock(VideoDao.class);
+    private VideoShop mockDao(BiConsumer biConsumer) {
+        CustomerManager customerDao = mock(CustomerManager.class);
+        VideoManager videoDao = mock(VideoManager.class);
         biConsumer.accept(customerDao, videoDao);
         return new VideoShop(customerDao, videoDao);
     }
 
     @Test
-    public void 고객은한개의비디오의예상금액을알수있다() {
-        BiConsumer<CustomerDao, VideoDao> consumer = (x, y) -> {
+    public void 고객은_한개의비디오를_빌릴경우_예상금액을_알수있다() {
+        BiConsumer<CustomerManager, VideoManager> consumer = (x, y) -> {
             when(x.get("eunnam")).thenReturn(new Customer("eunnam"));
             when(y.get("fifa")).thenReturn(new Video(VideoType.SPORT,"fifa",1000,10));
         };
-        VideoShop videoShop = mockVideoShop(consumer);
-        Integer expectedAmount = videoShop.expectedAmount(new Order("fifa", 10));
+        VideoShop videoShop = mockDao(consumer);
+        Integer expectedAmount = videoShop.expectedAmount(new Order(new Video(VideoType.SPORT,"fifa",1000,10), 10));
         assertThat(expectedAmount,is(10000));
     }
 
     @Test
-    public void 고객은여러개의비디오의예상금액을알수있다() {
-        BiConsumer<CustomerDao, VideoDao> consumer = (x, y) -> {
-            when(x.get("eunnam")).thenReturn(new Customer("eunnam"));
-            when(y.get("fifa")).thenReturn(new Video(VideoType.SPORT,"fifa",1000,10));
-            when(y.get("ring")).thenReturn(new Video(VideoType.MOVIE,"ring",2000,5));
+    public void 고객은_여러개의_비디오를_빌릴경우_예상금액을_알수있다() {
+        BiConsumer<CustomerManager, VideoManager> consumer = (x, y) -> {
         };
-
-        VideoShop videoShop = mockVideoShop(consumer);
-        Integer expectedAmount = videoShop.expectedAmount(new Order("fifa", 10), new Order("ring", 5));
+        VideoShop videoShop = mockDao(consumer);
+        Integer expectedAmount = videoShop.expectedAmount(new Order(new Video(VideoType.SPORT, "월드컵", 1000, 10), 10),
+                new Order(new Video(VideoType.MOVIE, "링",2000,5), 5));
         assertThat(expectedAmount, is(20000));
-
     }
 
     @Test
-    public void 비디오샾은_등록되지않은사용자를가입하고_사용자정보를준다() {
-        BiConsumer<CustomerDao, VideoDao> consumer = (x, y) -> {
-            when(x.get("no")).thenThrow(IllegalArgumentException.class);
-        };
-        VideoShop videoShop = mockVideoShop(consumer);
-         Customer customer =videoShop.registerCustomer("no");
-         assertThat(customer, is(new Customer("no")));
+    public void 비디오이름을_가지고_비디오정보를_가져올수있다() {
+        VideoManager mock = mock(VideoManager.class);
+        Video video = new Video(VideoType.SPORT, "fifa", 10000, 10);
+        when(mock.get("fifa")).thenReturn(video);
+        VideoShop videoShop = new VideoShop(new CustomerManager(), mock);
+        assertThat(videoShop.getVideo("fifa"),is(video));
     }
 
     @Test
-    public void 비디오샾은_비디오를등록하고비디오정보를넘겨준() {
-        VideoDao mock = mock(VideoDao.class);
-        CustomerDao customerDao = new CustomerDao();
-        VideoShop videoShop = new VideoShop(customerDao, mock);
-        Video fifa = new Video(VideoType.SPORT, "fifa", 1000, 10);
-        videoShop.registerVideo("fifa",fifa);
-        verify(mock, times(1)).add("fifa", fifa);
+    public void 고객은_비디오를_빌릴수있으며_정상적인경우_사용자정보에_빌릴정보가_있다() {
+        VideoManager videoManagerMock = mock(VideoManager.class);
+        CustomerManager customerManagerMock = mock(CustomerManager.class);
+        Customer customerMock = mock(Customer.class);
+        when(videoManagerMock.get("fifa")).thenReturn(new Video(VideoType.SPORT,"fifa",1000,10));
+        when(customerManagerMock.get(anyString())).thenReturn(customerMock);
+        VideoShop videoShop = new VideoShop(customerManagerMock, videoManagerMock);
+        Order order = new Order(videoShop.getVideo("fifa"), 5);
+        videoShop.rent("mannue", order);
+        verify(customerMock).register(order);
     }
+
 }

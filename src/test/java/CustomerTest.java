@@ -14,26 +14,28 @@ public class CustomerTest {
     }
 
     @Test
-    public void 고객은이름이같으면같은객체이고이름이다르면다른객체이다() {
+    public void 고객은_이름이_같으면_같은객체이고_이름이_다르면_다른객체이다() {
         assertThat(validCustomer, is(new Customer("eunnam")));
         assertThat(validCustomer, is(not(new Customer("different"))));
     }
 
-    public void 고객을잘못된대상과비교한다() {
+    @Test
+    public void 고객을_잘못된대상과_비교한다() {
         assertThat(validCustomer.equals(null),is(false));
     }
 
     @Test
-    public void 고객은_빌린비디오_총금액_을가지고있다() {
+    public void 고객은_빌린비디오_총금액을_가지고있다() {
         Customer customer = new Customer("eunnam");
-        Integer size = customer.register(new Rental(10000,new Order("fifa",10)));
+        Video video = new Video(VideoType.SPORT,"월드컵",1000,10);
+        Integer size = customer.register(new Order(video,10));
         assertThat(size, is(1));
     }
     @Test
-    public void 고객은_렌탈정보를_등록하면지금까지_등록된렌탈갯수_를알수있다() {
+    public void 고객은_빌린정보를_가지고있다() {
         Customer customer = new Customer("eunnam");
-        Rental rental = new Rental(20000,new Order("fifa", 10), new Order("ring", 5));
-        Integer rentalSum = customer.register(rental);
+        Video video = new Video(VideoType.SPORT,"월드컵",1000,10);
+        Integer rentalSum = customer.register(new Order(video,5));
         assertThat(rentalSum, is(1));
     }
 }

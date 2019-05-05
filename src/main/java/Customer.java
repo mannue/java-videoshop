@@ -24,8 +24,13 @@ public class Customer {
         return Objects.hash(name);
     }
 
-    public Integer register(Rental rental) {
-        list.add(rental);
+    public Integer register(Order ... orders) {
+        Integer amount = 0;
+        for (Order order : orders) {
+            Video video = order.video();
+            amount += video.calculateAmount(order.date());
+        }
+        list.add(new Rental(amount,orders));
         return list.size();
     }
 
@@ -39,5 +44,9 @@ public class Customer {
 
     public List<Rental> getRentalList() {
         return list;
+    }
+
+    public String getName() {
+        return name;
     }
 }

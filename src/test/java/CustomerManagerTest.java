@@ -4,27 +4,27 @@ import org.junit.Test;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
-public class CustomerDaoTest {
-    CustomerDao customerDao;
+public class CustomerManagerTest {
+    CustomerManager customerDao;
     Customer eunnam;
     Customer other;
 
     @Before
     public void 초기화() {
-        customerDao = new CustomerDao();
+        customerDao = new CustomerManager();
         eunnam = new Customer("eunnam");
-        customerDao.add("eunnam", eunnam);
+        customerDao.add(eunnam);
         other = new Customer("other");
-        customerDao.add("other", other);
+        customerDao.add(other);
     }
 
     @Test
-    public void 이름을가지고가입할수있다() {
-        Customer customer = customerDao.add("eunnam", new Customer("eunnam"));
+    public void 고객은_이름을_가지고_가입할수있다() {
+        Customer customer = customerDao.add(new Customer("eunnam"));
         assertThat(customer,is(eunnam));
     }
     @Test
-    public void 이름을가지고손님정보를가져올수있다() {
+    public void 고객이름을_가지고_손님정보를_가져올수있다() {
         assertThat(customerDao.get("eunnam"), is(eunnam));
         assertThat(customerDao.get("other"),is(other));
     }
