@@ -48,7 +48,7 @@ public class ConsoleMain {
             String order = scan.nextLine();
             if (order.contains("end")) break;
             String[] item = order.split(" ");
-            orders.add(new Order(videoShop.getVideo(item[0]), Integer.valueOf(item[1])));
+            orders.add(new Order(videoShop.findVideo(item[0]), Integer.valueOf(item[1])));
             System.out.println("빌릴 비디오를 추가하였습니다");
             System.out.println("대여 종료시 end 를, 입력을 원하는 경우 동일하게 입력해주세요");
         }

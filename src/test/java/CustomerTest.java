@@ -20,11 +20,6 @@ public class CustomerTest {
     }
 
     @Test
-    public void 고객을_잘못된대상과_비교한다() {
-        assertThat(validCustomer.equals(null),is(false));
-    }
-
-    @Test
     public void 고객은_빌린비디오_총금액을_가지고있다() {
         Customer customer = new Customer("eunnam");
         Video video = new Video(VideoType.SPORT,"월드컵",1000,10);
